@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สบายใจไอที | สบายใจใช้เรา</title>
+    
+    <!-- นำเข้า Font 'Kanit' สำหรับภาษาไทย -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- นำเข้า Icon จาก FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           1. ตัวแปรสีและการตั้งค่าพื้นฐาน (Variables)
+           ========================================= */
+        :root {
+            --color-bg-cream: #FAF9F6;      /* สีครีมมินิมอล */
+            --color-white: #FFFFFF;         /* สีขาว */
+            --color-pastel-green: #81C784;  /* สีเขียวพาสเทล */
+            --color-dark: #2D3436;          /* สีดำ/เทาเข้ม */
+            --color-gray: #636E72;          /* สีเทารอง */
+            
+            /* เงาวับๆ (Glass & Shadow) */
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 40px rgba(129, 199, 132, 0.2); /* เงาอมเขียววับๆ */
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        body {
+            background-color: var(--color-bg-cream);
+            color: var(--color-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* =========================================
+           2. แถบนำทาง (Navbar)
+           ========================================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px); /* Glass Effect */
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--color-pastel-green);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--color-gray);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-pastel-green);
+        }
+
+        /* เมนูเบอร์เกอร์สำหรับมือถือ */
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           3. ส่วน Banner หลัก (Hero Section)
+           ========================================= */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(250, 249, 246, 0.8), rgba(250, 249, 246, 0.9)),
+                        url('https://images.unsplash.com/photo-1531297172867-4f401364211f?auto=format&fit=crop&w=1920&q=80') center/cover;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--color-dark);
+        }
+
+        .hero-slogan {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: var(--color-pastel-green);
+            margin-bottom: 20px;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--color-gray);
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--color-pastel-green);
+            color: var(--color-white);
+            box-shadow: 0 10px 20px rgba(129, 199, 132, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            background-color: #66BB6A;
+        }
+
+        /* =========================================
+           4. ส่วนเกี่ยวกับเรา (About Section)
+           ========================================= */
+        section {
+            padding: 80px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--color-dark);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: var(--color-pastel-green);
+            border-radius: 2px;
+        }
+
+        #about {
+            background-color: var(--color-white);
+            border-radius: var(--radius-lg);
+            margin: -50px 5% 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        #about p {
+            font-size: 1.2rem;
+            color: var(--color-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* =========================================
+           5. ส่วนสินค้า (Products Section)
+           ========================================= */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            border: 2px solid var(--color-pastel-green);
+            background: transparent;
+            color: var(--color-dark);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--color-pastel-green);
+            color: var(--color-white);
+            box-shadow: 0 5px 15px rgba(129, 199, 132, 0.3);
+        }
+
+        /* Grid แบบ Responsive */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* Card สินค้า - Material Design 3 + Glass/Shadow */
+        .product-card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #f0f0f0;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--color-white);
+            z-index: 2; /* ปิดส่วนล่างของรูปตอน hover zoom */
+        }
+
+        .product-category {
+            font-size: 0.85rem;
+            color: var(--color-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--color-dark);
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-pastel-green);
+            margin-top: auto;
+            margin-bottom: 15px;
+        }
+
+        .btn-order {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--color-pastel-green);
+            color: var(--color-pastel-green);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-order:hover {
+            background: var(--color-pastel-green);
+            color: var(--color-white);
+        }
+
+        /* ซ่อนการ์ดเมื่อ Filter */
+        .product-card.hide {
+            display: none;
+        }
+
+        /* =========================================
+           6. ส่วนติดต่อเรา (Contact Section)
+           ========================================= */
+        #contact {
+            background: var(--color-white);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            color: var(--color-gray);
+            padding: 15px;
+            background: var(--color-bg-cream);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .contact-item:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-sm);
+            color: var(--color-pastel-green);
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--color-pastel-green);
+        }
+
+        .map-container {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            height: 350px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* =========================================
+           7. Footer
+           ========================================= */
+        footer {
+            background: var(--color-dark);
+            color: var(--color-white);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .social-media {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-media a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: var(--color-white);
+            transition: var(--transition);
+        }
+
+        .social-media a:hover {
+            background: var(--color-pastel-green);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: #b2bec3;
+        }
+
+        /* =========================================
+           8. Animations & Responsive
+           ========================================= */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Class สำหรับ Scroll Animation */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title { font-size: 3rem; }
+            .contact-container { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: var(--color-white);
+                width: 100%;
+                text-align: center;
+                padding: 20px 0;
+                box-shadow: var(--shadow-md);
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero-title { font-size: 2.5rem; }
+            section { padding: 50px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Navbar -->
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-microchip"></i> สบายใจไอที
+        </div>
+        <ul class="nav-links">
+            <li><a href="#hero">หน้าแรก</a></li>
+            <li><a href="#products">สินค้า</a></li>
+            <li><a href="#about">เกี่ยวกับเรา</a></li>
+            <li><a href="#contact">ติดต่อ</a></li>
+        </ul>
+        <div class="menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section -->
+    <header id="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">สบายใจไอที</h1>
+            <h2 class="hero-slogan">สบายใจใช้เรา</h2>
+            <p class="hero-desc">ขายสินค้า ไอที เยอะแยะมากมาย หลายอย่าง นะจ๊ะ</p>
+            <a href="#products" class="btn btn-primary">ดูสินค้าทั้งหมด</a>
+        </div>
+    </header>
+
+    <!-- 3. About Section -->
+    <section id="about" class="fade-in-up">
+        <h2 class="section-title">เกี่ยวกับเรา</h2>
+        <p>สบายใจไอที ร้านคอมพิวเตอร์และอุปกรณ์ไอทีที่คัดสรรสินค้าคุณภาพมาเพื่อคุณโดยเฉพาะ ด้วยความตั้งใจที่จะให้ลูกค้าทุกคน "สบายใจใช้เรา" เรามีสินค้ามากมายให้เลือกสรร พร้อมบริการที่ใส่ใจในทุกรายละเอียด</p>
+    </section>
+
+    <!-- 4. Product Section -->
+    <section id="products">
+        <h2 class="section-title fade-in-up">สินค้าของเรา</h2>
+        
+        <!-- Filter Buttons (4 หมวดหมู่) -->
+        <div class="filter-container fade-in-up">
+            <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+            <button class="filter-btn" data-filter="laptop">Laptop / Notebook</button>
+            <button class="filter-btn" data-filter="tablet">Tablet / iPad</button>
+            <button class="filter-btn" data-filter="monitor">Monitor / จอภาพ</button>
+            <button class="filter-btn" data-filter="accessory">Accessories</button>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid">
+            
+            <!-- สินค้า 1 (ตามที่คุณกำหนดเป๊ะๆ) -->
+            <div class="product-card fade-in-up" data-category="tablet">
+                <img src="https://media-cdn.bnn.in.th/616652/microsoft-surface-pro-13-m1016256-lcd-platinum-ep2-73233-196388823253-1.jpg" alt="Microsoft Surface Pro" class="product-img">
+                <div class="product-info">
+                    <span class="product-category">Tablet</span>
+                    <h3 class="product-name">Microsoft Surface Pro 13 M10/</h3>
+                    <div class="product-price">฿ 56,990</div>
+                    <button class="btn-order">สั่งซื้อเลย</button>
+                </div>
+            </div>
+
+            <!-- สินค้า 2 -->
+            <div class="product-card fade-in-up" data-category="laptop">
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80" alt="MacBook Pro" class="product-img">
+                <div class="product-info">
+                    <span class="product-category">Laptop</span>
+                    <h3 class="product-name">MacBook Pro 14" M3 Chip</h3>
+                    <div class="product-price">฿ 59,900</div>
+                    <button class="btn-order">สั่งซื้อเลย</button>
+                </div>
+            </div>
+
+            <!-- สินค้า 3 -->
+            <div class="product-card fade-in-up" data-category="laptop">
+                <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=600&q=80" alt="Dell XPS" class="product-img">
+                <div class="product-info">
+                    <span class="product-category">Laptop</span>
+                    <h3 class="product-name">Dell XPS 15 OLED (2024)</h3>
+                    <div class="product-price">฿ 65,000</div>
+                    <button class="btn-order">สั่งซื้อเลย</button>
+                </div>
+            </div>
+
+            <!-- สินค้า 4 -->
+            <div class="product-card fade-in-up" data-category="tablet">
+                <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80" alt="iPad Pro" class="product-img">
+                <div class="product-info">
+                    <span class="product-category">Tablet</span>
+                    <h3 class="product-name">Apple iPad Pro 12.9" M2</h3>
+                    <div class="product-price">฿ 44,900</div>
+                    <button class="btn-order">สั่งซื้อเลย</button>
+                </div>
+            </div>
+
+            <!-- สินค้า 5 -->
+            <div class="product-card fade-in-up" data-category="accessory">
+                <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=600&q=80" alt="Mouse" class="product-img">
+                <div class="product-info">
+                    <span class="product-category">Accessory</span>
+                    <h3 class="product-name">Logitech MX Master 3S</h3>
+                    <div class="product-price">฿ 3,990</div>
+                    <button class="btn-order">สั่งซื้อเลย</button>
+                </div>
+            </div>
+
+            <!-- สินค้า 6 -->
+            <div class="product-card fade-in-up" data-category="accessory">
+                <img src="https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=600&q=80" alt="Keyboard" class="product-img">
+                <div class="product-info">
+                    <span class="product-category">Accessory</span>
+                    <h3 class="product-name">Keychron Q1 Pro Mechanical</h3>
+                    <div class="product-price">฿ 6,500</div>
+                    <button class="btn-order">สั่งซื้อเลย</button>
+                </div>
+            </div>
+
+            <!-- สินค้า 7 -->
+            <div class="product-card fade-in-up" data-category="monitor">
+                <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=600&q=80" alt="Monitor LG" class="product-img">
+                <div class="product-info">
+                    <span class="product-category">Monitor</span>
+                    <h3 class="product-name">LG UltraGear 27" 144Hz</h3>
+                    <div class="product-price">฿ 12,900</div>
+                    <button class="btn-order">สั่งซื้อเลย</button>
+                </div>
+            </div>
+
+            <!-- สินค้า 8 -->
+            <div class="product-card fade-in-up" data-category="monitor">
+                <img src="https://images.unsplash.com/photo-1552831388-6a0b3575b32a?auto=format&fit=crop&w=600&q=80" alt="Monitor Samsung" class="product-img">
+                <div class="product-info">
+                    <span class="product-category">Monitor</span>
+                    <h3 class="product-name">Samsung Odyssey G7 Curved</h3>
+                    <div class="product-price">฿ 22,000</div>
+                    <button class="btn-order">สั่งซื้อเลย</button>
+                </div>
+            </div>
+
+            <!-- สินค้า 9 -->
+            <div class="product-card fade-in-up" data-category="accessory">
+                <img src="https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=600&q=80" alt="AirPods" class="product-img">
+                <div class="product-info">
+                    <span class="product-category">Accessory</span>
+                    <h3 class="product-name">AirPods Pro (Gen 2)</h3>
+                    <div class="product-price">฿ 8,990</div>
+                    <button class="btn-order">สั่งซื้อเลย</button>
+                </div>
+            </div>
+
+            <!-- สินค้า 10 -->
+            <div class="product-card fade-in-up" data-category="laptop">
+                <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=80" alt="Lenovo ThinkPad" class="product-img">
+                <div class="product-info">
+                    <span class="product-category">Laptop</span>
+                    <h3 class="product-name">Lenovo ThinkPad X1 Carbon</h3>
+                    <div class="product-price">฿ 55,000</div>
+                    <button class="btn-order">สั่งซื้อเลย</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. Contact Section -->
+    <section id="contact">
+        <h2 class="section-title fade-in-up">ติดต่อเรา</h2>
+        <div class="contact-container">
+            <!-- ข้อมูลติดต่อ -->
+            <div class="contact-info fade-in-up">
+                <a href="#" class="contact-item">
+                    <i class="fa-brands fa-facebook"></i>
+                    <span>สบายใจไอที - Sabaijai IT</span>
+                </a>
+                <a href="#" class="contact-item">
+                    <i class="fa-brands fa-line"></i>
+                    <span>@sabaijai.it</span>
+                </a>
+                <a href="tel:0801234567" class="contact-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>080-123-4567</span>
+                </a>
+                <div class="contact-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>ศูนย์การค้าไอทีพลาซ่า ชั้น 3 ล็อก A12 กรุงเทพฯ</span>
+                </div>
+            </div>
+            
+            <!-- Google Map Iframe (ใช้พิกัดกลาง กทม. เป็นตัวอย่าง) -->
+            <div class="map-container fade-in-up">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15502.822292728286!2d100.528343!3d13.736717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e299281a4b5b77%3A0x1d3600572b834d85!2sBangkok!5e0!3m2!1sen!2sth!4v1620000000000!5m2!1sen!2sth" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Footer -->
+    <footer>
+        <div class="social-media">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-line"></i></a>
+            <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+        <p class="copyright">© 2026 สบายใจไอที (Sabaijai IT). All Rights Reserved.</p>
+    </footer>
+
+    <!-- =========================================
+         JavaScript สำหรับ Interactive & Animation 
+         ========================================= -->
+    <script>
+        // 1. ระบบจัดการเมนูเบอร์เกอร์บนมือถือ
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // 2. ระบบ Filter หมวดหมู่สินค้า
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const productCards = document.querySelectorAll('.product-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // ลบ class active จากปุ่มทั้งหมด และเพิ่มให้ปุ่มที่ถูกกด
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                // ซ่อน/แสดง การ์ดสินค้าตาม Category
+                productCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    if (filterValue === 'all' || filterValue === category) {
+                        card.classList.remove('hide');
+                        // Reset animation trigger
+                        setTimeout(() => {
+                            card.classList.add('appear');
+                        }, 50);
+                    } else {
+                        card.classList.add('hide');
+                        card.classList.remove('appear');
+                    }
+                });
+            });
+        });
+
+        // 3. ระบบ Scroll Animation (Fade-in up) เมือเลื่อนหน้าจอ
+        const observerOptions = {
+            threshold: 0.1, // สั่งทำงานเมื่อเห็นชิ้นส่วน 10%
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                    observer.unobserve(entry.target); // รันครั้งเดียวแล้วเลิกจับตา
+                }
+            });
+        }, observerOptions);
+
+        // จับตาดู elements ที่มีคลาส fade-in-up ทั้งหมด
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 4. เปลี่ยนสี Navbar เมื่อ Scroll ลงมา
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+            } else {
+                nav.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.05)';
+            }
+        });
+    </script>
+</body>
+</html>
